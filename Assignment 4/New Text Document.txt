@@ -1,0 +1,32 @@
+# sorting the array here
+	li	$t4, 9		# for the test condition
+
+next2:	li	$t7, 0		#initialize swap tester(1 is swap, 0 is not)
+	li	$t5, 0		#set counter to 0
+	la	$t0, array	#load base address of array2
+	ble	$t5, $t4, sort	#if(counter <= terminator) branch loop8
+	nop
+	addi	$t4, $t4, -1	#advance the terminator
+	bnez	$t7, next2	#if(not swap) branch to loop7
+	nop
+	j	done		#done
+
+sort:	lw	$t2, ($t0)	#load current value
+	lw	$t3, 4($t0)	#load next value
+	nop
+	bgt	$t2, $t3, swap	#if(current value > next value) branch to swap
+	nop
+	addi	$t0, $t0, 4	#advance the pointer and counter
+	addi	$t5, $t5, 1
+	ble	$t5, $t4, sort	#if(counter <= terminator) branch to loop8
+	nop
+	addi	$t4, $t4, -1	#advance the terminator
+	b	loop7		#branch to loop7
+	nop
+swap:	sw	$t2, 4($t0)	#swap and store the value back into the pointers
+	sw	$t3, ($t0)	
+	li	$t7, 1		#set the swap tester to 1
+	addi	$t0, $t0, 4	#advance the pointer and counter
+	addi	$t5, $t5, 1
+	b	sort		#branch to loop8
+	nop

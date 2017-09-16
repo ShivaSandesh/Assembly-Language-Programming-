@@ -1,0 +1,3 @@
+When using 'add' the assembler generates an exception and says "Arithmetic Overflow." 
+While in the case of the addu it did not generate any exception. Using the addu we do 
+not get the correct results.

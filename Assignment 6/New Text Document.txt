@@ -1,0 +1,22 @@
+## GOT d^2, now get sqrt
+	
+## get (x + n/x)/2 into $f9
+sqrt:	## get (x + n/x)/2 into $f9
+	div.s	$f5, $f12, $f8	# $f9 = d/x
+	add.s	$f5, $f5, $f8	# = x + d/x
+	div.s	$f8, $f5, $f11	# = (x + d/x)/2 = new x
+	
+	## CHECK
+	mul.s	$f6, $f8, $f8	# $f6 = (new x)^2 
+	div.s	$f6, $f12, $f6	# $f6 = d/x^2
+	sub.s	$f6, $f6, $f10	# $f6 = d/x^2 -1
+	abs.s	$f6, $f6	# $f6 = | d/x^2 - 1 |
+	c.lt.s	$f6, $f9	# set flag if f6 < tolerance
+	bc1t	done		# branch to done if flag set
+	nop
+	j	sqrt		# else do it again
+	nop
+done:
+	mov.s	$f0, $f8
+	jr	$ra		# jump out of subroutine
+	nop
